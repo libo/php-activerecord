@@ -5,7 +5,7 @@ class NotModel {};
 
 class Day extends ActiveRecord\Model{
   static $has_many = array(
-    array('events', 'through' => 'events_has_days', 'class_name' => 'EventsHasDay'),
+    array('events', 'through' => 'events_has_days', 'class_name' => 'Event'),
     array('events_has_days', 'foreign_key' => 'days_id', 'class_name' => 'EventsHasDay')
   );
 }
