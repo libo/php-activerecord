@@ -3,6 +3,20 @@ include 'helpers/config.php';
 
 class NotModel {};
 
+class Day extends ActiveRecord\Model{
+  static $has_many = array(
+    array('events', 'through' => 'events_has_days', 'class_name' => 'EventsHasDay'),
+    array('events_has_days', 'foreign_key' => 'days_id', 'class_name' => 'EventsHasDay')
+  );
+}
+
+class EventsHasDay extends ActiveRecord\Model{
+  static $belongs_to = array(
+    array('day',   'foreign_key' => 'days_id',   'class_name' => 'Day'),
+    array('event', 'foreign_key' => 'events_id', 'class_name' => 'Event')
+  );
+}
+
 class AuthorWithNonModelRelationship extends ActiveRecord\Model
 {
 	static $pk = 'id';
@@ -689,6 +703,12 @@ class RelationshipTest extends DatabaseTest
 		$event = Event::find(1, array('joins' => array('venue')));
 
 		$this->assert_equals($event->id, $event->venue->id);
+	}
+	
+	public function test_gh_132_HABTM_and_not_conventional_foreign_key_names()
+	{
+	  $my_day = Day::first()->events;
+	  $this->assert_equals('today', $my_day->name);
 	}
 
 	/**

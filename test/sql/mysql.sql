@@ -85,3 +85,13 @@ CREATE TABLE property_amenities(
   `amenity_id` int(11) NOT NULL DEFAULT '0',
   `property_id` int(11) NOT NULL DEFAULT '0'
 );
+
+CREATE TABLE days(
+  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `name` varchar(255) NOT NULL DEFAULT ''
+);
+
+CREATE TABLE events_has_days(
+  `events_id` int(11) unsigned NOT NULL DEFAULT '0',
+  `days_id`   int(11) unsigned NOT NULL DEFAULT '0'
+);
